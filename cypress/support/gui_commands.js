@@ -50,3 +50,18 @@ Cypress.Commands.add('gui_createIssue', issue => {
   cy.get('.qa-issuable-form-description').type(issue.description)
   cy.contains('Submit issue').click()
 })
+
+Cypress.Commands.add('api_createIssue', issue => {
+  cy.api_createProject(issue.project)
+    .then(response => {
+      cy.request({
+        method: 'POST',
+        url: `/api/v4/projects/${response.body.id}/issues`,
+        body: {
+          title: issue.title,
+          description: issue.description
+        },
+        headers: { Authorization: accessToken },
+      })
+  })
+})
