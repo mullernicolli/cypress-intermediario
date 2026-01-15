@@ -51,17 +51,10 @@ Cypress.Commands.add('gui_createIssue', issue => {
   cy.contains('Submit issue').click()
 })
 
-Cypress.Commands.add('api_createIssue', issue => {
-  cy.api_createProject(issue.project)
-    .then(response => {
-      cy.request({
-        method: 'POST',
-        url: `/api/v4/projects/${response.body.id}/issues`,
-        body: {
-          title: issue.title,
-          description: issue.description
-        },
-        headers: { Authorization: accessToken },
-      })
-  })
+Cypress.Commands.add('gui_createLabel', label => {
+  cy.get('.qa-label-title').type(label.name)
+  cy.get('.qa-label-description').type(label.description)
+  cy.get('.qa-label-color').clear()
+  cy.get('.qa-label-color').type(label.background_color)
+  cy.contains('Create label').click()
 })
