@@ -58,3 +58,18 @@ Cypress.Commands.add('gui_createLabel', label => {
   cy.get('.qa-label-color').type(label.background_color)
   cy.contains('Create label').click()
 })
+
+Cypress.Commands.add('gui_setLabelOnIssue', label => {
+
+  // Abre o componente de edição de labels da issue.
+  // Esse elemento só existe quando uma issue está aberta na UI.
+  cy.get('.qa-edit-link-labels').click()
+
+  // Localiza a label pelo nome visível
+  // e simula o clique do usuário para associá-la à issue.
+  cy.contains(label.name).click()
+
+  // Clica fora do componente para fechar o dropdown
+  // e confirmar a seleção da label.
+  cy.get('body').click()
+})
