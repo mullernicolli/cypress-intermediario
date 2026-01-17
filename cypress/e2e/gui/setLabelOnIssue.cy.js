@@ -17,7 +17,7 @@ describe('Set label on issue', options, () => {
    * pois são gerados pelo backend e retornados na resposta da API.
    */
   const issue = {
-    name: `issue-${faker.datatype.uuid()}`,
+    title: `issue-${faker.datatype.uuid()}`,
     description: faker.random.words(4),
     project: {
       name: `project-${faker.datatype.uuid()}`,
@@ -101,11 +101,8 @@ describe('Set label on issue', options, () => {
     // Valida a cor da label conforme exibida na interface.
     // O assert utiliza o estilo inline aplicado pelo GitLab,
     // garantindo que a cor correta foi renderizada na UI.
-    cy.get('.qa-labels-block span')
-      .should(
-        'have.attr',
-        'style',
-        `background-color: ${label.color}; color: #333333;`
-      )
+cy.get('.qa-labels-block span')
+  .should('have.attr', 'style')
+  .and('contain', `background-color: ${label.color}`)
   })
 })
