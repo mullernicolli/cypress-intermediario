@@ -1,4 +1,4 @@
-const accessToken = `Bearer ${Cypress.env('gitlab_access_token')}`
+const accessToken = `Bearer ${Cypress.env('gitlab_access_token')}`  // definindo uma variável para o token para que eu possa reaproveitá-la em todo o código sem precisar ficar escrevendo tudo isso dnv (bearer....)
 
 Cypress.Commands.add('api_createProject', project => {
   cy.request({
@@ -38,7 +38,7 @@ Cypress.Commands.add('api_createIssue', issue => {
         method: 'POST',
         url: `/api/v4/projects/${response.body.id}/issues`,
         body: {
-          name: issue.name,
+          title: issue.title,
           description: issue.description
         },
         headers: { Authorization: accessToken },
@@ -77,5 +77,18 @@ Cypress.Commands.add('api_createLabel', (projectId, label) => {
       // e o token identifica o usuário que está realizando a ação.
       Authorization: `Bearer ${Cypress.env('gitlab_access_token')}`
     }
+  })
+})
+
+Cypress.Commands.add('api_createMilestone', (projectId, milestone) => {
+  cy.request({
+    method: 'POST',
+    url: `/api/v4/projects/${projectId}/milestones`,
+    body: {
+      title: milestone.title,
+    },
+
+    headers: { Authorization: accessToken },
+
   })
 })
