@@ -7,6 +7,7 @@ describe('Logout', () => {
     it('successfully', () => {
         cy.logout()
 
-        cy.url().should('be.equal', `${Cypress.config('baseUrl')}/users/sign_in`)
+        cy.location('pathname')
+        .should('eq', '/users/sign_in')
     })
 })
